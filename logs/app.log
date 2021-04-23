@@ -1,0 +1,17 @@
+2021-04-22 21:02:11,411 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 4.524 seconds (JVM running for 6.431)
+2021-04-22 21:08:58,214 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 60708 (/home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general/target/classes started by coin in /home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general)
+2021-04-22 21:08:58,221 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-22 21:08:58,221 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-22 21:09:02,137 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 4.722 seconds (JVM running for 6.572)
+2021-04-22 21:12:56,332 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 61467 (/home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general/target/classes started by coin in /home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general)
+2021-04-22 21:12:56,336 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-22 21:12:56,338 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-22 21:12:59,972 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 4.166 seconds (JVM running for 5.525)
+2021-04-22 21:13:19,577 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-2] Iniciando Metodo: postUsuario
+2021-04-22 21:13:19,581 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-2] El usuario ha sido guardado correctamente.
+2021-04-22 21:17:17,019 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 61467 (/home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general/target/classes started by coin in /home/coin/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE/sistema-general)
+2021-04-22 21:17:17,019 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-22 21:17:17,020 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-22 21:17:18,436 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 1.523 seconds (JVM running for 263.988)
+2021-04-22 21:17:30,722 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-2] Iniciando Metodo: postUsuario
+2021-04-22 21:17:30,726 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-2] El usuario ha sido guardado correctamente.
