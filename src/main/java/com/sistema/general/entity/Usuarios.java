@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -16,15 +15,7 @@ import javax.persistence.Table;
 public class Usuarios {
 	
 	@Id
-	@SequenceGenerator(
-			name = "usuario_sequencia",
-			sequenceName = "student_sequencia",
-			allocationSize = 1
-	)
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "usuario_sequencia"
-	)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long usuarioId;
 	@Column(nullable=false)
 	private String nombre;

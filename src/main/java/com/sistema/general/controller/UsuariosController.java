@@ -22,9 +22,9 @@ import org.slf4j.*;
 public class UsuariosController {
 	
 	Logger logger = LoggerFactory.getLogger(UsuariosController.class);
-	
+
 	@Autowired
-	UsuariosService usuariosService;
+	private UsuariosService usuariosService;
 	
 	@GetMapping()
 	public Response getUsuarios() throws Exception{
