@@ -83,8 +83,8 @@ public class UsuariosController {
 		
 		try {
 			
-			usuariosService.postUsuario(userData);
-			return new Response(1, "Se registro el usuario correctamente.", null);
+			Response response = usuariosService.postUsuario(userData);
+			return response;
 		
 		}
 		catch(Exception e) {

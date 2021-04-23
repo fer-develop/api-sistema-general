@@ -1,6 +1,5 @@
 package com.sistema.general.configuration;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
@@ -22,8 +21,7 @@ public class UsuariosConfig {
 					"Verdugo",
 					"alan.castillo@gmail.com",
 					"asdasdasd",
-					"asda",
-					LocalDate.now()
+					"asda"
 			);
 			Usuarios jorge = new Usuarios(
 					"Jorge",
@@ -31,8 +29,7 @@ public class UsuariosConfig {
 					"Verdugo",
 					"alan.castillo.uas@gmail.com",
 					"asdasdasdasdasdasd",
-					"asda",
-					LocalDate.now()
+					"asda"
 			);
 			
 			repository.saveAll(List.of(alan, jorge));

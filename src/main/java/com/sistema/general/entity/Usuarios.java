@@ -32,7 +32,7 @@ public class Usuarios {
 	private String apellidoPaterno;
 	@Column(nullable=false)
 	private String apellidoMaterno;
-	@Column(nullable=false)
+	@Column(nullable=false, columnDefinition="TEXT UNIQUE")
 	private String email;
 	@Column(nullable=false)
 	private String password;

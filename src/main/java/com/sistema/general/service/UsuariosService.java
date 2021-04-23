@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sistema.general.entity.Login;
+import com.sistema.general.entity.Response;
 import com.sistema.general.entity.Usuarios;
 import com.sistema.general.repository.UsuariosRepository;
 
@@ -75,23 +76,26 @@ public class UsuariosService {
 	
 	}
 	
-	public Usuarios postUsuario(Usuarios usuarioData) throws Exception {
+	public Response postUsuario(Usuarios usuarioData) throws Exception {
 		logger.info("Iniciando Metodo: postUsuario");
 		
-		Usuarios usuario = null;
+	    Response response = null;
 	    
 		try {
 			
-			usuario = usuariosRepository.save(usuarioData); 
-				
-			logger.info("El usuario ha sido guardado correctamente.");
-			return usuario;
+			if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
+				response = new Response(0, "Ya existe un usuario registrado con este correo.", null);
+			} else {
+				usuariosRepository.save(usuarioData);
+				logger.info("El usuario ha sido guardado correctamente.");
+				response = new Response(1, "Se inserto el usuario correctamente.", null);
+			}
 		
 		} catch(Exception e) {
 			logger.error(e.toString());
 		}
 		
-		return usuario;
+		return response;
 		
 	}
 	
