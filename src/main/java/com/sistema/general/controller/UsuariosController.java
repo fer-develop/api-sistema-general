@@ -23,9 +23,13 @@ public class UsuariosController {
 	
 	Logger logger = LoggerFactory.getLogger(UsuariosController.class);
 
+	private final UsuariosService usuariosService;
+
 	@Autowired
-	private UsuariosService usuariosService;
-	
+	public UsuariosController(UsuariosService usuariosService) {
+		this.usuariosService = usuariosService;
+	}
+
 	@GetMapping()
 	public Response getUsuarios() throws Exception{
 		
