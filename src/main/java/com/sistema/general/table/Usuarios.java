@@ -1,4 +1,7 @@
-package com.sistema.general.entity;
+package com.sistema.general.table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
@@ -8,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 @Entity
 @Table
@@ -25,10 +27,10 @@ public class Usuarios {
 	private String apellidoMaterno;
 	@Column(nullable=false, columnDefinition="TEXT UNIQUE")
 	private String email;
-	@Column(nullable=false)
+	@Column(name="password", nullable=false)
 	private String password;
 	private String nomImage;
-	@Column(name="fecha_registro", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable= false, insertable = false)
+	@Column(name="fecha_registro", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable=false, insertable=false, nullable = false)
 	private LocalDate fechaRegistro;
 	
 
@@ -37,7 +39,17 @@ public class Usuarios {
 	}
 	
 	public Usuarios(String nombre, String apellidoPaterno, String apellidoMaterno, String email,
-			String password, String nomImage, LocalDate fechaRegistro) {
+			String password, String nomImage) {
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.email = email;
+		this.password = password;
+		this.nomImage = nomImage;
+	}
+
+	public Usuarios(String nombre, String apellidoPaterno, String apellidoMaterno, String email,
+					String password, String nomImage, LocalDate fechaRegistro) {
 		this.nombre = nombre;
 		this.apellidoPaterno = apellidoPaterno;
 		this.apellidoMaterno = apellidoMaterno;
@@ -47,36 +59,20 @@ public class Usuarios {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	public Usuarios(String nombre, 
-				   String apellidoPaterno,
-				   String apellidoMaterno, 
-				   String email, 
-				   String password,
-			LocalDate fechaRegistro) {
-		
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.email = email;
-		this.password = password;
-		this.fechaRegistro = fechaRegistro;
-	}
-
-	public Usuarios(String nombre, 
-				   String apellidoPaterno,
-				   String apellidoMaterno, 
-				   String email,
-				   String password, 
-				   String nomImage) {
-		
+	public Usuarios(Long usuarioId, String nombre, String apellidoPaterno, String apellidoMaterno, String email,
+					String password, String nomImage, LocalDate fechaRegistro) {
+		this.usuarioId = usuarioId;
 		this.nombre = nombre;
 		this.apellidoPaterno = apellidoPaterno;
 		this.apellidoMaterno = apellidoMaterno;
 		this.email = email;
 		this.password = password;
 		this.nomImage = nomImage;
+		this.fechaRegistro = fechaRegistro;
 	}
 
+	@JsonIgnore
+	@JsonProperty(value = "usuarioId")
 	public Long getUsuarioId() {
 		return usuarioId;
 	}
@@ -117,6 +113,8 @@ public class Usuarios {
 		this.email = email;
 	}
 
+	@JsonIgnore
+	@JsonProperty(value = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -132,7 +130,9 @@ public class Usuarios {
 	public void setNomImage(String nomImage) {
 		this.nomImage = nomImage;
 	}
-	
+
+	@JsonIgnore
+	@JsonProperty(value = "fechaRegistro")
 	public LocalDate getFechaRegistro() {
 		return fechaRegistro;
 	}

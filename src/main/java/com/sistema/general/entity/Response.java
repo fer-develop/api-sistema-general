@@ -1,10 +1,13 @@
 package com.sistema.general.entity;
 
+import java.util.List;
+
 public class Response {
 	
 	int code;
 	String message;
-	Object data;
+	Object data = List.of();
+	String token;
 	
 	public Response(int code, String message, Object data) {
 		super();
@@ -13,6 +16,28 @@ public class Response {
 		this.data = data;
 	}
 	
+	public Response(int code, String message) {
+		super();
+		this.code = code;
+		this.message = message;
+	}
+	
+	public Response(int code, String message, Object data, String token) {
+		super();
+		this.code = code;
+		this.message = message;
+		this.data = data;
+		this.token = token;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public int getCode() {
 		return code;
 	}

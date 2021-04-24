@@ -6,14 +6,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sistema.general.entity.Usuarios;
-import com.sistema.general.repository.UsuariosRepository;
+import com.sistema.general.table.Usuarios;
+import com.sistema.general.repository.SistemaRepository;
 
 
 @Configuration
-public class UsuariosConfig {
+public class SistemaConfig {
 	@Bean
-	CommandLineRunner commandLineRunner(UsuariosRepository repository) {
+	CommandLineRunner commandLineRunner(SistemaRepository repository) {
 		return args -> {
 			Usuarios alan = new Usuarios(
 					"Alan",
