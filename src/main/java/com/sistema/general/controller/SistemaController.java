@@ -2,8 +2,6 @@ package com.sistema.general.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,17 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sistema.general.entity.Response;
 import com.sistema.general.table.Usuarios;
 
-
 import com.sistema.general.service.SistemaService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.servlet.ServletContext;
-
-import org.apache.commons.io.IOUtils;
 import org.slf4j.*;
 
 @RestController
@@ -55,8 +48,8 @@ public class SistemaController {
 			return sistemaService.getUsuarios();
 		} catch(Exception e) {
 			logger.error(e.toString());		
-			return new Response(-1, "Ocurrio un error al obtener usuarios.");
 		}
+		return new Response(-1, "Ocurrio un error al obtener usuarios.");
 	}
 	
 	@PostMapping("/registrar")
@@ -66,8 +59,8 @@ public class SistemaController {
 			return sistemaService.postUsuario(userData);
 		} catch(Exception e) {
 			logger.error(e.toString());
-			return new Response(-1, "Ocurrio un error al registrar usuario.");
 		}
+		return new Response(-1, "Ocurrio un error al registrar usuario.");
 	}
 	
 	@PutMapping("/actualizar/{usuarioId}")
@@ -76,8 +69,8 @@ public class SistemaController {
 			return sistemaService.putUsuario(usuarioId, userData);
 		} catch(Exception e) {
 			logger.error(e.toString());
-			return new Response(-1, "Ocurrio un error al actualizar usuario.");
 		}
+		return new Response(-1, "Ocurrio un error al actualizar usuario.");
 	}
 
 	@PostMapping("/login")
@@ -91,16 +84,16 @@ public class SistemaController {
 			}
 		} catch(Exception e) {
 			logger.error(e.toString());
-			return new Response(-1, "Ocurrio un error al hacer login.");
 		}
+		return new Response(-1, "Ocurrio un error al hacer login.");
 	}
 	
-	@PostMapping("/subir/imagen")
-	public Response putImage(@RequestParam("imagen") MultipartFile imagen) throws Exception{
+	@PostMapping("/subir/imagen/{usuarioId}")
+	public Response putImage(@PathVariable Long usuarioId, @RequestParam("imagen") MultipartFile imagen) throws Exception{
 		logger.info("Iniciando Servicio: putImage");
 		try {
 			if (imagen != null) {
-				return sistemaService.putImage(imagen);
+				return sistemaService.putImage(usuarioId, imagen);
 			}
 		} catch (Exception e) {
 			logger.error(e.toString());
@@ -110,20 +103,23 @@ public class SistemaController {
 	
 	@RequestMapping(value="/obtener/imagen/{nombreImagen}", method = RequestMethod.GET, produces=MediaType.IMAGE_PNG_VALUE)
 	public ResponseEntity<Resource>  getImage(@PathVariable String nombreImagen) throws IOException {
-		
+		logger.info("Iniciando Servicio: getImage");
 		try {
-			final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
-	                "./fotos/"+nombreImagen
-	        )));
-	
-			 return ResponseEntity
-		                .status(HttpStatus.OK)
-		                .contentLength(inputStream.contentLength())
-		                .body(inputStream);
+			if (nombreImagen != null) {
+				final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
+		                "./fotos/"+nombreImagen
+		        )));
+				return ResponseEntity
+			                .status(HttpStatus.OK)
+			                .contentLength(inputStream.contentLength())
+			                .body(inputStream);
+			} else {
+				return ResponseEntity.badRequest().body(null);
+			}
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(null);
+			logger.error(e.toString());
 		}
-		
+		return ResponseEntity.badRequest().body(null);
 	}
 	
 }

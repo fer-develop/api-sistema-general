@@ -1,6 +1,5 @@
 package com.sistema.general.service;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -51,8 +51,7 @@ public class SistemaService {
 						usuarios);
 			} else {
 				response = new Response(0,
-						"No hay usuarios registrados.",
-						List.of());
+						"No hay usuarios registrados.");
 			}
 		} catch (Exception e) {
 			logger.error(e.toString());
@@ -67,7 +66,7 @@ public class SistemaService {
 			String emailLower = usuarioData.getEmail().toLowerCase();
 			usuarioData.setEmail(emailLower);
 			if (sistemaRepository.countByEmail(usuarioData.getEmail()) > 0) {
-				response = new Response(0, "Ya existe un usuario registrado con este correo.", List.of());
+				response = new Response(0, "Ya existe un usuario registrado con este correo.");
 			} else {
 				int strength = 5;
 				BCryptPasswordEncoder bCryptPasswordEncoder =
@@ -102,10 +101,10 @@ public class SistemaService {
 					logger.info("El usuario " + email + "esta intentando iniciar sesion.");
 					response = new Response(1, "Bienvenido(a) " + findByEmail.getNombre(), findByEmail, tokenClass.generarJWToken(findByEmail));
 				} else {
-					response = new Response(0, "La contraseña no es valida.", List.of());
+					response = new Response(0, "La contraseña no es valida.");
 				}
 			} else {
-				response = new Response(0, "Este email no se encuentra registrado.", List.of());
+				response = new Response(0, "Este email no se encuentra registrado.");
 			}
 		} catch(Exception e) {
 			logger.error(e.toString());
@@ -127,7 +126,6 @@ public class SistemaService {
 						usuario.setApellidoMaterno(getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
 						usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 						usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
-						usuario.setNomImage(getValor(usuarioData.getNomImage(), usuario.getNomImage()));
 						usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
 						response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
 					}
@@ -135,7 +133,6 @@ public class SistemaService {
 					usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
 					usuario.setApellidoMaterno(getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
 					usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
-					usuario.setNomImage(getValor(usuarioData.getNomImage(), usuario.getNomImage()));
 					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
 					response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
 				}
@@ -156,32 +153,46 @@ public class SistemaService {
 		}
 	}
 	
-	public Response putImage(MultipartFile imagen) {
+	public Response putImage(Long usuarioId, MultipartFile imagen) throws Exception{
 		logger.info("Iniciando Metodo: putImage");
 		
 		Response response = null;
 		try {
-			File theDir = new File("./fotos/");
-			if (!theDir.exists()){
-			    theDir.mkdirs();
-			}
-			String pathFotos = "./fotos/";
-			byte[] bytesImg = imagen.getBytes();
-			
-			InputStream is = new ByteArrayInputStream(bytesImg);
-			BufferedImage bi = ImageIO.read(is);
-			BufferedImage imagenResize = this.resizeImage(bi, 150, 150);
-			
 			String extension = FilenameUtils.getExtension(imagen.getOriginalFilename());
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(imagenResize, extension, baos);
-			byte[] bytes = baos.toByteArray();
-			
-			Path path = Paths.get(pathFotos + imagen.getOriginalFilename());
-			
-			Files.write(path, bytes);
+			String nameImage = UUID.randomUUID().toString() + "." + extension;
+			if (extension.contains("jpg") || extension.contains("jpeg") || extension.contains("png")) {
+				File theDir = new File("./fotos/");
+				if (!theDir.exists()){
+				    theDir.mkdirs();
+				}
+				String pathFotos = "./fotos/";
+				byte[] bytesImg = imagen.getBytes();
+				
+				InputStream is = new ByteArrayInputStream(bytesImg);
+				BufferedImage bi = ImageIO.read(is);
+				BufferedImage imagenResize = this.resizeImage(bi, 150, 150);
+				
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ImageIO.write(imagenResize, extension, baos);
+				byte[] bytes = baos.toByteArray();
+				
+				Path path = Paths.get(pathFotos + nameImage);
+				
+				Files.write(path, bytes);
+				
+				Usuarios usuario = sistemaRepository.findOneByUsuarioId(usuarioId);
+				if (usuario != null) {
+					usuario.setNomImage(nameImage);
+					response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
+				} else {
+					response = new Response(0, "Ocurrio un error al actualizar foto.");
+				}
+			} else {
+				response = new Response(0, "Formato no compatible/Verificar que sea .jpg .jpeg o .png .");
+			}
 		} catch (Exception e) {
 			logger.error(e.toString());
+			response = new Response(-1, "Ocurrio un error al subir fotografia.");
 		}
 		return response;
 	}
