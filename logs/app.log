@@ -1,11 +1,4 @@
-2021-04-24 22:25:43,033 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-24 22:25:45,765 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 5.589 seconds (JVM running for 7.024)
-2021-04-24 22:26:11,297 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-3] Iniciando Servicio: putImage
-2021-04-24 22:26:11,313 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-3] Iniciando Metodo: putImage
-2021-04-24 22:29:43,462 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 27611 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
-2021-04-24 22:29:43,469 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
-2021-04-24 22:29:43,469 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
-2021-04-24 22:29:45,109 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-24 22:29:47,728 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 5.09 seconds (JVM running for 7.59)
-2021-04-24 22:30:29,359 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-2] Iniciando Servicio: putImage
-2021-04-24 22:30:29,385 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-2] Iniciando Metodo: putImage
+2021-04-24 23:31:12,115 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-1] Iniciando Metodo: postUsuario
+2021-04-24 23:31:12,328 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-1] El usuario ha sido guardado correctamente.
+2021-04-24 23:31:14,875 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-4] Iniciando Servicio: putImage
+2021-04-24 23:31:14,880 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-4] Iniciando Metodo: putImage

@@ -155,7 +155,6 @@ public class SistemaService {
 	
 	public Response putImage(Long usuarioId, MultipartFile imagen) throws Exception{
 		logger.info("Iniciando Metodo: putImage");
-		
 		Response response = null;
 		try {
 			String extension = FilenameUtils.getExtension(imagen.getOriginalFilename());
