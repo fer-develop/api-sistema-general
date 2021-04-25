@@ -33,6 +33,10 @@ public class Menus {
 	@OneToMany(mappedBy = "menu")
     private List<SubMenus> submenu;
 	
+	
+	@OneToMany(mappedBy = "menuUsuario")
+    private List<MenusUsuarios> menuUsuario;
+	
 
 	public Menus(Long menuId, Integer titulo, String icono) {
 		super();
@@ -79,6 +83,14 @@ public class Menus {
 
 	public void setSubmenu(List<SubMenus> submenu) {
 		this.submenu = submenu;
+	}
+
+	public List<MenusUsuarios> getMenuUsuario() {
+		return menuUsuario;
+	}
+
+	public void setMenuUsuario(List<MenusUsuarios> menuUsuario) {
+		this.menuUsuario = menuUsuario;
 	}
 	
 }

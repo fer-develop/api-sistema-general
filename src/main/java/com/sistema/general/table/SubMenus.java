@@ -1,5 +1,7 @@
 package com.sistema.general.table;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +39,8 @@ public class SubMenus {
 	@ManyToOne
     @JoinColumn(name="menu_id")
     private Menus menu;
+	@OneToMany(mappedBy = "usuariosub")
+    private List<SubMenusUsuarios> subMenuUsuarios;
 
 	public SubMenus(Long submenuId, Long menuId, String titulo, String url) {
 		super();
@@ -81,6 +86,14 @@ public class SubMenus {
 
 	public void setMenu(Menus menu) {
 		this.menu = menu;
+	}
+
+	public List<SubMenusUsuarios> getSubMenuUsuarios() {
+		return subMenuUsuarios;
+	}
+
+	public void setSubMenuUsuarios(List<SubMenusUsuarios> subMenuUsuarios) {
+		this.subMenuUsuarios = subMenuUsuarios;
 	}
 	
 }

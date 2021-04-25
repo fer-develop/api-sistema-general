@@ -20,7 +20,7 @@ public class SistemaGeneralApplication {
 		JWToken jwtoken = new JWToken();
 		autenticacionBean.setFilter(jwtoken);
 		autenticacionBean.addUrlPatterns("/api/v1/menu/*");
-		autenticacionBean.addUrlPatterns("/api/v1/usuarios/obtener");
+		//autenticacionBean.addUrlPatterns("/api/v1/usuarios/obtener");
 		autenticacionBean.addUrlPatterns("/api/v1/usuarios/actualizar/*");
 		return autenticacionBean;
 	}
