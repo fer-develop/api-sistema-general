@@ -1,18 +1,38 @@
 package com.sistema.general.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sistema.general.entity.Response;
 import com.sistema.general.table.Usuarios;
+
+
 import com.sistema.general.service.SistemaService;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import javax.servlet.ServletContext;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.*;
 
 @RestController
@@ -74,5 +94,36 @@ public class SistemaController {
 			return new Response(-1, "Ocurrio un error al hacer login.");
 		}
 	}
-
+	
+	@PostMapping("/subir/imagen")
+	public Response putImage(@RequestParam("imagen") MultipartFile imagen) throws Exception{
+		logger.info("Iniciando Servicio: putImage");
+		try {
+			if (imagen != null) {
+				return sistemaService.putImage(imagen);
+			}
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return new Response(-1, "Ocurrio un error al subir imagen");
+	}
+	
+	@RequestMapping(value="/obtener/imagen/{nombreImagen}", method = RequestMethod.GET, produces=MediaType.IMAGE_PNG_VALUE)
+	public ResponseEntity<Resource>  getImage(@PathVariable String nombreImagen) throws IOException {
+		
+		try {
+			final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
+	                "./fotos/"+nombreImagen
+	        )));
+	
+			 return ResponseEntity
+		                .status(HttpStatus.OK)
+		                .contentLength(inputStream.contentLength())
+		                .body(inputStream);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		
+	}
+	
 }

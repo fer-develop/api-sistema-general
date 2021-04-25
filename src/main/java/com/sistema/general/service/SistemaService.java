@@ -1,21 +1,33 @@
 package com.sistema.general.service;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sistema.general.entity.JWToken;
 import com.sistema.general.entity.Response;
 import com.sistema.general.table.Usuarios;
 import com.sistema.general.repository.SistemaRepository;
-
-
 
 @Service
 @Transactional
@@ -142,6 +154,40 @@ public class SistemaService {
 		} else {
 			return cadena2;
 		}
+	}
+	
+	public Response putImage(MultipartFile imagen) {
+		logger.info("Iniciando Metodo: putImage");
+		
+		Response response = null;
+		try {
+			File theDir = new File("./fotos/");
+			if (!theDir.exists()){
+			    theDir.mkdirs();
+			}
+			String pathFotos = "./fotos/";
+			byte[] bytesImg = imagen.getBytes();
+			
+			InputStream is = new ByteArrayInputStream(bytesImg);
+			BufferedImage bi = ImageIO.read(is);
+			BufferedImage imagenResize = this.resizeImage(bi, 150, 150);
+			
+			String extension = FilenameUtils.getExtension(imagen.getOriginalFilename());
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(imagenResize, extension, baos);
+			byte[] bytes = baos.toByteArray();
+			
+			Path path = Paths.get(pathFotos + imagen.getOriginalFilename());
+			
+			Files.write(path, bytes);
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return response;
+	}
+	
+	BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws Exception {
+	    return Scalr.resize(originalImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight, Scalr.OP_ANTIALIAS);
 	}
 	
 }

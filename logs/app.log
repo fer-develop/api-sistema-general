@@ -1,25 +1,11 @@
-2021-04-24 17:10:13,799 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 2.267 seconds (JVM running for 622.573)
-2021-04-24 17:10:20,504 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 365135 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
-2021-04-24 17:10:20,518 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
-2021-04-24 17:10:20,518 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
-2021-04-24 17:10:21,220 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-24 17:10:22,572 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 2.186 seconds (JVM running for 631.346)
-2021-04-24 17:11:03,400 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 379480 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
-2021-04-24 17:11:03,425 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
-2021-04-24 17:11:03,425 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
-2021-04-24 17:11:06,421 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-24 17:11:10,948 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 8.525 seconds (JVM running for 12.277)
-2021-04-24 17:11:23,056 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-3] Iniciando Servicio: postUsuario
-2021-04-24 17:11:23,081 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-3] Iniciando Metodo: postUsuario
-2021-04-24 17:11:23,453 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-3] El usuario ha sido guardado correctamente.
-2021-04-24 17:11:48,475 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-4] Iniciando Metodo: putUsuario
-2021-04-24 17:15:49,477 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 385506 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
-2021-04-24 17:15:49,486 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
-2021-04-24 17:15:49,493 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
-2021-04-24 17:15:52,638 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-24 17:15:57,436 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 9.185 seconds (JVM running for 12.57)
-2021-04-24 17:16:18,177 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-2] Iniciando Servicio: postUsuario
-2021-04-24 17:16:18,196 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-2] Iniciando Metodo: postUsuario
-2021-04-24 17:16:18,536 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-2] El usuario ha sido guardado correctamente.
-2021-04-24 17:16:26,395 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-3] Iniciando Metodo: putUsuario
-2021-04-24 17:16:36,345 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-4] Iniciando Metodo: putUsuario
+2021-04-24 22:25:43,033 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
+2021-04-24 22:25:45,765 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 5.589 seconds (JVM running for 7.024)
+2021-04-24 22:26:11,297 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-3] Iniciando Servicio: putImage
+2021-04-24 22:26:11,313 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-3] Iniciando Metodo: putImage
+2021-04-24 22:29:43,462 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 27611 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
+2021-04-24 22:29:43,469 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-24 22:29:43,469 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-24 22:29:45,109 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
+2021-04-24 22:29:47,728 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 5.09 seconds (JVM running for 7.59)
+2021-04-24 22:30:29,359 INFO com.sistema.general.controller.SistemaController [http-nio-8080-exec-2] Iniciando Servicio: putImage
+2021-04-24 22:30:29,385 INFO com.sistema.general.service.SistemaService [http-nio-8080-exec-2] Iniciando Metodo: putImage
