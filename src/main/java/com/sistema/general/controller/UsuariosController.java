@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sistema.general.entity.Response;
 import com.sistema.general.table.Usuarios;
 
-import com.sistema.general.service.SistemaService;
+import com.sistema.general.service.UsuariosService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,14 +30,14 @@ import org.slf4j.*;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
-public class SistemaController {
+public class UsuariosController {
 	
-	Logger logger = LoggerFactory.getLogger(SistemaController.class);
+	Logger logger = LoggerFactory.getLogger(UsuariosController.class);
 
-	private final SistemaService sistemaService;
+	private final UsuariosService sistemaService;
 
 	@Autowired
-	public SistemaController(SistemaService sistemaService) {
+	public UsuariosController(UsuariosService sistemaService) {
 		this.sistemaService = sistemaService;
 	}
 

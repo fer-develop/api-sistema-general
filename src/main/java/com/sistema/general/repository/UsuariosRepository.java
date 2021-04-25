@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.sistema.general.table.Usuarios;
 
 @Repository
-public interface SistemaRepository extends JpaRepository<Usuarios, Long>{
+public interface UsuariosRepository extends JpaRepository<Usuarios, Long>{
 
 	Usuarios findOneByUsuarioId(Long usuarioId) throws Exception;
 

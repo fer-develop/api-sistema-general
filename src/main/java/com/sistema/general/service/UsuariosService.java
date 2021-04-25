@@ -27,24 +27,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sistema.general.entity.JWToken;
 import com.sistema.general.entity.Response;
 import com.sistema.general.table.Usuarios;
-import com.sistema.general.repository.SistemaRepository;
+import com.sistema.general.repository.UsuariosRepository;
 
 @Service
 @Transactional
-public class SistemaService {
+public class UsuariosService {
 	
-	final SistemaRepository sistemaRepository;
-	Logger logger = LoggerFactory.getLogger(SistemaService.class);
+	final UsuariosRepository usuariosRepository;
+	Logger logger = LoggerFactory.getLogger(UsuariosService.class);
 	@Autowired
-	public SistemaService(SistemaRepository sistemaRepository) {
-		this.sistemaRepository = sistemaRepository;
+	public UsuariosService(UsuariosRepository usuariosRepository) {
+		this.usuariosRepository = usuariosRepository;
 	}
 
 	public Response getUsuarios() throws Exception {
 		logger.info("Iniciando Metodo: getUsuarios");
 		Response response = null;
 		try {
-			List<Usuarios> usuarios = sistemaRepository.findAll();
+			List<Usuarios> usuarios = usuariosRepository.findAll();
 			if (usuarios != null) {
 				response = new Response(1,
 						"Se encontraron los usuarios.",
@@ -65,7 +65,7 @@ public class SistemaService {
 		try {
 			String emailLower = usuarioData.getEmail().toLowerCase();
 			usuarioData.setEmail(emailLower);
-			if (sistemaRepository.countByEmail(usuarioData.getEmail()) > 0) {
+			if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
 				response = new Response(0, "Ya existe un usuario registrado con este correo.");
 			} else {
 				int strength = 5;
@@ -73,7 +73,7 @@ public class SistemaService {
 						new BCryptPasswordEncoder(strength, new SecureRandom());
 				String encodedPassword = bCryptPasswordEncoder.encode(usuarioData.getPassword());
 				usuarioData.setPassword(encodedPassword);
-				Usuarios user = sistemaRepository.save(usuarioData);
+				Usuarios user = usuariosRepository.save(usuarioData);
 				if (user != null) {
 					logger.info("El usuario ha sido guardado correctamente.");
 					response = new Response(1, "Se inserto el usuario correctamente.", user);
@@ -92,7 +92,7 @@ public class SistemaService {
 		Response response = null;
 		JWToken tokenClass = new JWToken();
 		try {
-			Usuarios findByEmail = sistemaRepository.findOneByEmail(email);
+			Usuarios findByEmail = usuariosRepository.findOneByEmail(email);
 			if (findByEmail != null)
 			{
 				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -116,10 +116,10 @@ public class SistemaService {
 		logger.info("Iniciando Metodo: putUsuario");
 		Response response = null;
 		try {
-			Usuarios usuario = sistemaRepository.getOne(usuarioId);
+			Usuarios usuario = usuariosRepository.getOne(usuarioId);
 			if (usuario != null) {
 				if (usuarioData.getEmail() != null && usuarioData.getEmail() != "") {
-					if (sistemaRepository.countByEmail(usuarioData.getEmail()) > 0) {
+					if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
 						response = new Response(0, "El email proporcionado ya esta registrado.");	
 					} else {
 						usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
@@ -127,14 +127,14 @@ public class SistemaService {
 						usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 						usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
 						usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
-						response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
+						response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 					}
 				} else {
 					usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
 					usuario.setApellidoMaterno(getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
 					usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
-					response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
+					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 				}
 			} else {
 				response = new Response(0, "El usuario no pudo ser encontrado.");
@@ -179,10 +179,10 @@ public class SistemaService {
 				
 				Files.write(path, bytes);
 				
-				Usuarios usuario = sistemaRepository.findOneByUsuarioId(usuarioId);
+				Usuarios usuario = usuariosRepository.findOneByUsuarioId(usuarioId);
 				if (usuario != null) {
 					usuario.setNomImage(nameImage);
-					response = new Response(1, "Se actualizo el usuario.", sistemaRepository.save(usuario));
+					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 				} else {
 					response = new Response(0, "Ocurrio un error al actualizar foto.");
 				}

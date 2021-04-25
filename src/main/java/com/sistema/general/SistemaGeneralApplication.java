@@ -24,4 +24,5 @@ public class SistemaGeneralApplication {
 		autenticacionBean.addUrlPatterns("/api/v1/usuarios/actualizar/*");
 		return autenticacionBean;
 	}
+	
 }

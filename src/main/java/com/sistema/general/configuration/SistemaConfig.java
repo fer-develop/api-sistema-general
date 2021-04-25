@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.sistema.general.table.Usuarios;
-import com.sistema.general.repository.SistemaRepository;
+import com.sistema.general.repository.UsuariosRepository;
 
 
 @Configuration
 public class SistemaConfig {
+	// Inserciones de Usuarios por Default
 	@Bean
-	CommandLineRunner commandLineRunner(SistemaRepository repository) {
+	CommandLineRunner commandLineRunner(UsuariosRepository repository) {
 		return args -> {
 			Usuarios alan = new Usuarios(
 					"Alan",
@@ -35,4 +36,7 @@ public class SistemaConfig {
 			repository.saveAll(List.of(alan, jorge));
 		};
 	}
+	
+	//Inserciones de opciones de menu por Default
+	
 }
