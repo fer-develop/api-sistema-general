@@ -1,7 +1,24 @@
-2021-04-25 13:44:10,524 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-25 13:44:14,751 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 8.395 seconds (JVM running for 10.073)
-2021-04-25 13:46:18,710 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 27754 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
-2021-04-25 13:46:18,726 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
-2021-04-25 13:46:18,727 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
-2021-04-25 13:46:21,491 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
-2021-04-25 13:46:25,437 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 7.706 seconds (JVM running for 9.83)
+2021-04-25 21:24:10,259 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
+2021-04-25 21:24:14,651 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 8.223 seconds (JVM running for 10.378)
+2021-04-25 21:24:23,938 INFO com.sistema.general.controller.MenusController [http-nio-8080-exec-2] Iniciando Servicio: getMenu
+2021-04-25 21:25:30,246 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 75446 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
+2021-04-25 21:25:30,256 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-25 21:25:30,257 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-25 21:25:33,680 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
+2021-04-25 21:25:39,020 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 9.658 seconds (JVM running for 12.739)
+2021-04-25 21:25:47,307 INFO com.sistema.general.controller.MenusController [http-nio-8080-exec-2] Iniciando Servicio: getMenu
+2021-04-25 21:34:33,798 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Starting SistemaGeneralApplication using Java 15.0.2 on coin-H110M4-C23 with PID 77278 (/home/coin/git/repository/sistema-general/target/classes started by coin in /home/coin/git/repository/sistema-general)
+2021-04-25 21:34:33,813 DEBUG com.sistema.general.SistemaGeneralApplication [restartedMain] Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-04-25 21:34:33,813 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] No active profile set, falling back to default profiles: default
+2021-04-25 21:34:36,804 DEBUG com.sistema.general.entity.JWToken [restartedMain] Filter 'JWToken' configured for use
+2021-04-25 21:34:42,471 INFO com.sistema.general.SistemaGeneralApplication [restartedMain] Started SistemaGeneralApplication in 9.718 seconds (JVM running for 12.332)
+2021-04-25 21:34:54,862 INFO com.sistema.general.controller.MenusController [http-nio-8080-exec-2] Iniciando Servicio: getMenu
+2021-04-25 21:35:07,512 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-3] Iniciando Servicio: postUsuario
+2021-04-25 21:35:07,531 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-3] Iniciando Metodo: postUsuario
+2021-04-25 21:35:07,904 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-3] El usuario ha sido guardado correctamente.
+2021-04-25 21:35:38,330 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-4] Iniciando Servicio: login
+2021-04-25 21:35:38,331 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-4] Iniciando Metodo: login
+2021-04-25 21:35:38,389 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-4] El usuario alan.castillo@gmail.coasdasdaesta intentando iniciar sesion.
+2021-04-25 21:38:59,856 INFO com.sistema.general.controller.MenusController [http-nio-8080-exec-7] Iniciando Servicio: getMenu
+2021-04-25 21:39:04,196 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-8] Iniciando Servicio: getUsuarios
+2021-04-25 21:39:04,199 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-8] Iniciando Metodo: getUsuarios

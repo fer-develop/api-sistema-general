@@ -42,18 +42,27 @@ public class SubMenus {
 	@OneToMany(mappedBy = "usuariosub")
     private List<SubMenusUsuarios> subMenuUsuarios;
 
-	public SubMenus(Long submenuId, Long menuId, String titulo, String url) {
+	
+	public SubMenus(Long submenuId, String titulo, String url, Menus menu, List<SubMenusUsuarios> subMenuUsuarios) {
 		super();
 		this.submenuId = submenuId;
+		this.titulo = titulo;
+		this.url = url;
+		this.menu = menu;
+		this.subMenuUsuarios = subMenuUsuarios;
+	}
+	
+	public SubMenus(String titulo, String url) {
+		super();
 		this.titulo = titulo;
 		this.url = url;
 	}
 	
-	public SubMenus(Long submenuId, Long menuId, String titulo, String url, Menus menu) {
+	public SubMenus(String titulo, String url, Menus menu) {
 		super();
-		this.submenuId = submenuId;
 		this.titulo = titulo;
 		this.url = url;
+		this.menu = menu;
 	}
 
 	public Long getSubmenuId() {

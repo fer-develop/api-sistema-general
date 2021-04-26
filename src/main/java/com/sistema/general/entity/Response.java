@@ -2,12 +2,15 @@ package com.sistema.general.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
 	
 	int code;
 	String message;
 	Object data = List.of();
-	String token;
+	private String token;
 	
 	public Response(int code, String message, Object data) {
 		super();

@@ -47,6 +47,13 @@ public class SubMenusUsuarios {
 		this.usuariosub = usuariosub;
 		this.visible = visible;
 	}
+	
+	public SubMenusUsuarios(SubMenus submenuUsuario, Usuarios usuariosub, Boolean visible) {
+		super();
+		this.submenuUsuario = submenuUsuario;
+		this.usuariosub = usuariosub;
+		this.visible = visible;
+	}
 
 
 	public Long getSubmenuOpcion() {

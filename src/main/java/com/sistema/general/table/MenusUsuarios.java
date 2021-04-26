@@ -46,6 +46,13 @@ public class MenusUsuarios {
 		this.usuario = usuario;
 		this.visible = visible;
 	}
+	
+	public MenusUsuarios(Menus menuUsuario, Usuarios usuario, Boolean visible) {
+		super();
+		this.menuUsuario = menuUsuario;
+		this.usuario = usuario;
+		this.visible = visible;
+	}
 
 
 	public Long getMenuOpcionId() {

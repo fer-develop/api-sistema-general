@@ -6,37 +6,80 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.sistema.general.table.Menus;
+import com.sistema.general.table.MenusUsuarios;
+import com.sistema.general.table.SubMenus;
+import com.sistema.general.table.SubMenusUsuarios;
 import com.sistema.general.table.Usuarios;
+import com.sistema.general.repository.MenusRepository;
+import com.sistema.general.repository.MenusUsuariosRepository;
+import com.sistema.general.repository.SubMenusRepository;
+import com.sistema.general.repository.SubMenusUsuariosRepository;
 import com.sistema.general.repository.UsuariosRepository;
 
 
 @Configuration
 public class SistemaConfig {
 	// Inserciones de Usuarios por Default
+
 	@Bean
-	CommandLineRunner commandLineRunner(UsuariosRepository repository) {
+	CommandLineRunner commandLineRunner(UsuariosRepository usuariosrepository, 
+										MenusRepository menusRepository, 
+										SubMenusRepository submenuRepository,
+										SubMenusUsuariosRepository submenuUsuariosRepository,
+										MenusUsuariosRepository menusUsuariosRepository) {
 		return args -> {
+			// Registrar Usuarios prueba
 			Usuarios alan = new Usuarios(
 					"Alan",
 					"Castillo",
 					"Verdugo",
 					"alan.castillo@gmail.com",
-					"asdasdasd",
-					"asda"
-			);
-			Usuarios jorge = new Usuarios(
-					"Jorge",
-					"Castillo",
-					"Verdugo",
-					"alan.castillo.uas@gmail.com",
-					"asdasdasdasdasdasd",
+					"1234",
 					"asda"
 			);
 			
-			repository.saveAll(List.of(alan, jorge));
+			Usuarios usuarioReturned = usuariosrepository.save(alan);
+			
+			Menus sistema  = new Menus(
+					"Sistema",
+					"mdi mdi-gauge"
+			);
+			
+			Menus menuReturned = menusRepository.save(sistema);
+			
+			SubMenus optSubMenu = new SubMenus("Prueba","/prueba", menuReturned);
+			
+			SubMenus submenuReturned = submenuRepository.save(optSubMenu);
+			
+			MenusUsuarios usuarioMenu = new MenusUsuarios(
+					menuReturned,
+					usuarioReturned,
+					true
+			);
+			
+			SubMenusUsuarios submenuusuarioasd = new SubMenusUsuarios(
+					submenuReturned, 
+					usuarioReturned, 
+					true
+			);
+			
+			MenusUsuarios menuUsuario = menusUsuariosRepository.save(usuarioMenu);
+			
+			SubMenusUsuarios subMenuUsuario = submenuUsuariosRepository.save(submenuusuarioasd);
+			
+			
+			//for (Menus menu : menuReturned) {
+				
+				
+				
+				
+				//listSubmenuPrueba.add(optSubMenu);
+				//
+			//}
+			
 		};
 	}
 	
-	//Inserciones de opciones de menu por Default
 	
 }
