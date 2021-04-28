@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
+
 import org.slf4j.*;
+
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -86,6 +91,22 @@ public class UsuariosController {
 			logger.error(e.toString());
 		}
 		return new Response(-1, "Ocurrio un error al hacer login.");
+	}
+	
+	@GetMapping("/renovar")
+	public Response actualizarToken(HttpServletRequest request) {
+		logger.info("Iniciando Servicio: actualizarToken");
+	
+		try {
+			if (request != null) {
+				return sistemaService.renovarToken(request);
+			} else {
+				throw new Exception("Falta el token.");
+			}
+		} catch(Exception e) {
+			logger.error(e.toString());
+		}
+		return new Response(-1, "Ocurrio un error al obtener token.");
 	}
 	
 	@PostMapping("/subir/imagen/{usuarioId}")

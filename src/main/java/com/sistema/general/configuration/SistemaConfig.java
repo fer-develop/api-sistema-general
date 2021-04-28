@@ -34,9 +34,9 @@ public class SistemaConfig {
 					"Alan",
 					"Castillo",
 					"Verdugo",
-					"alan.castillo@gmail.com",
-					"1234",
-					"asda"
+					"fer_dev@outlook.com",
+					"$2a$05$Pf12mYYB6id2mx.QNoD6relt6CdGSg23TgUBe/zTagSQcIJ7ym4xu",
+					"asd"
 			);
 			
 			Usuarios usuarioReturned = usuariosrepository.save(alan);

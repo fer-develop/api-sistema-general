@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
 import org.imgscalr.Scalr;
@@ -32,9 +33,10 @@ import com.sistema.general.repository.UsuariosRepository;
 @Service
 @Transactional
 public class UsuariosService {
-	
+
 	final UsuariosRepository usuariosRepository;
 	Logger logger = LoggerFactory.getLogger(UsuariosService.class);
+
 	@Autowired
 	public UsuariosService(UsuariosRepository usuariosRepository) {
 		this.usuariosRepository = usuariosRepository;
@@ -46,22 +48,19 @@ public class UsuariosService {
 		try {
 			List<Usuarios> usuarios = usuariosRepository.findAll();
 			if (usuarios != null) {
-				response = new Response(1,
-						"Se encontraron los usuarios.",
-						usuarios);
+				response = new Response(1, "Se encontraron los usuarios.", usuarios);
 			} else {
-				response = new Response(0,
-						"No hay usuarios registrados.");
+				response = new Response(0, "No hay usuarios registrados.");
 			}
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
 		return response;
 	}
-	
+
 	public Response postUsuario(Usuarios usuarioData) throws Exception {
 		logger.info("Iniciando Metodo: postUsuario");
-	    Response response = null;
+		Response response = null;
 		try {
 			String emailLower = usuarioData.getEmail().toLowerCase();
 			usuarioData.setEmail(emailLower);
@@ -69,8 +68,7 @@ public class UsuariosService {
 				response = new Response(0, "Ya existe un usuario registrado con este correo.");
 			} else {
 				int strength = 5;
-				BCryptPasswordEncoder bCryptPasswordEncoder =
-						new BCryptPasswordEncoder(strength, new SecureRandom());
+				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(strength, new SecureRandom());
 				String encodedPassword = bCryptPasswordEncoder.encode(usuarioData.getPassword());
 				usuarioData.setPassword(encodedPassword);
 				Usuarios user = usuariosRepository.save(usuarioData);
@@ -81,7 +79,7 @@ public class UsuariosService {
 					throw new Exception("Ocurrio un error al registrar usuario.");
 				}
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error(e.toString());
 		}
 		return response;
@@ -93,25 +91,48 @@ public class UsuariosService {
 		JWToken tokenClass = new JWToken();
 		try {
 			Usuarios findByEmail = usuariosRepository.findOneByEmail(email);
-			if (findByEmail != null)
-			{
+			if (findByEmail != null) {
 				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 				CharSequence sc = password;
-				if(bCryptPasswordEncoder.matches(sc, findByEmail.getPassword())) {
+				if (bCryptPasswordEncoder.matches(sc, findByEmail.getPassword())) {
 					logger.info("El usuario " + email + "esta intentando iniciar sesion.");
-					response = new Response(1, "Bienvenido(a) " + findByEmail.getNombre(), findByEmail, tokenClass.generarJWToken(findByEmail));
+					response = new Response(1, "Bienvenido(a) " + findByEmail.getNombre(), findByEmail,
+							tokenClass.generarJWToken(findByEmail));
+					logger.info(response.toString());
 				} else {
-					response = new Response(0, "La contraseña no es valida.");
+					response = new Response(0, "Contraseña invalida.");
 				}
 			} else {
-				response = new Response(0, "Este email no se encuentra registrado.");
+				response = new Response(0, "Usuario no registrado.");
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error(e.toString());
 		}
 		return response;
 	}
-	
+
+	public Response renovarToken(HttpServletRequest request) {
+		Response response = null;
+		try {
+			Long usuarioId = (Long) request.getAttribute("usuarioId");
+			JWToken tokenClass = new JWToken();
+			if (usuarioId > 0) {
+				Usuarios findByIdUser = usuariosRepository.findOneByUsuarioId(usuarioId);
+				if (findByIdUser != null) {
+					logger.info("El usuario " + findByIdUser.getEmail() + "esta intentando iniciar sesion.");
+					response = new Response(1, "Token renovado.", null, tokenClass.generarJWToken(findByIdUser));
+				} else {
+					response = new Response(0, "Este usuario no se encuentra registrado.");
+				}
+			} else {
+				response = new Response(0, "Token invalido.");
+			}
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return response;
+	}
+
 	public Response putUsuario(Long usuarioId, Usuarios usuarioData) throws Exception {
 		logger.info("Iniciando Metodo: putUsuario");
 		Response response = null;
@@ -120,31 +141,35 @@ public class UsuariosService {
 			if (usuario != null) {
 				if (usuarioData.getEmail() != null && usuarioData.getEmail() != "") {
 					if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
-						response = new Response(0, "El email proporcionado ya esta registrado.");	
+						response = new Response(0, "El email proporcionado ya esta registrado.");
 					} else {
 						usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
-						usuario.setApellidoMaterno(getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
-						usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
+						usuario.setApellidoMaterno(
+								getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
+						usuario.setApellidoPaterno(
+								getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 						usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
 						usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
 						response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 					}
 				} else {
 					usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
-					usuario.setApellidoMaterno(getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
-					usuario.setApellidoPaterno(getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
+					usuario.setApellidoMaterno(
+							getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
+					usuario.setApellidoPaterno(
+							getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
 					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 				}
 			} else {
 				response = new Response(0, "El usuario no pudo ser encontrado.");
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error(e.toString());
 		}
 		return response;
 	}
-	
+
 	public String getValor(String cadena1, String cadena2) {
 		if (cadena1 != null && cadena1 != "") {
 			return cadena1;
@@ -152,8 +177,8 @@ public class UsuariosService {
 			return cadena2;
 		}
 	}
-	
-	public Response putImage(Long usuarioId, MultipartFile imagen) throws Exception{
+
+	public Response putImage(Long usuarioId, MultipartFile imagen) throws Exception {
 		logger.info("Iniciando Metodo: putImage");
 		Response response = null;
 		try {
@@ -161,24 +186,24 @@ public class UsuariosService {
 			String nameImage = UUID.randomUUID().toString() + "." + extension;
 			if (extension.contains("jpg") || extension.contains("jpeg") || extension.contains("png")) {
 				File theDir = new File("./fotos/");
-				if (!theDir.exists()){
-				    theDir.mkdirs();
+				if (!theDir.exists()) {
+					theDir.mkdirs();
 				}
 				String pathFotos = "./fotos/";
 				byte[] bytesImg = imagen.getBytes();
-				
+
 				InputStream is = new ByteArrayInputStream(bytesImg);
 				BufferedImage bi = ImageIO.read(is);
 				BufferedImage imagenResize = this.resizeImage(bi, 150, 150);
-				
+
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(imagenResize, extension, baos);
 				byte[] bytes = baos.toByteArray();
-				
+
 				Path path = Paths.get(pathFotos + nameImage);
-				
+
 				Files.write(path, bytes);
-				
+
 				Usuarios usuario = usuariosRepository.findOneByUsuarioId(usuarioId);
 				if (usuario != null) {
 					usuario.setNomImage(nameImage);
@@ -195,9 +220,10 @@ public class UsuariosService {
 		}
 		return response;
 	}
-	
+
 	BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws Exception {
-	    return Scalr.resize(originalImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight, Scalr.OP_ANTIALIAS);
+		return Scalr.resize(originalImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight,
+				Scalr.OP_ANTIALIAS);
 	}
-	
+
 }

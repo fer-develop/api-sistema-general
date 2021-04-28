@@ -44,8 +44,6 @@ public class JWToken extends GenericFilterBean {
 						        	 .claim("apellidoPaterno", usuarios.getApellidoPaterno())
 						        	 .claim("apellidoMaterno", usuarios.getApellidoMaterno())
 						        	 .compact(); 
-        Map<String, String> map = new HashMap<>();
-        map.put("token", token);
         return token;
     }
 

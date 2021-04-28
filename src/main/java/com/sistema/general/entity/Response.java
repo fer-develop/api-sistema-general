@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
 	
+	@Override
+	public String toString() {
+		return "Response [code=" + code + ", message=" + message + ", data=" + data + ", token=" + token + "]";
+	}
 	int code;
 	String message;
 	Object data = List.of();
