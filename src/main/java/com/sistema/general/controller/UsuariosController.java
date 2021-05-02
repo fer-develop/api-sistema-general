@@ -6,7 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 import org.slf4j.*;
 
@@ -78,6 +77,7 @@ public class UsuariosController {
 		return new Response(-1, "Ocurrio un error al actualizar usuario.");
 	}
 
+	
 	@PostMapping("/login")
 	public Response login(@RequestBody Usuarios usuarioData) throws Exception{
 		logger.info("Iniciando Servicio: login");
@@ -92,6 +92,7 @@ public class UsuariosController {
 		}
 		return new Response(-1, "Ocurrio un error al hacer login.");
 	}
+	
 	
 	@GetMapping("/renovar")
 	public Response actualizarToken(HttpServletRequest request) {
@@ -127,13 +128,15 @@ public class UsuariosController {
 		logger.info("Iniciando Servicio: getImage");
 		try {
 			if (nombreImagen != null) {
-				final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
-		                "./fotos/"+nombreImagen
-		        )));
-				return ResponseEntity
-			                .status(HttpStatus.OK)
-			                .contentLength(inputStream.contentLength())
-			                .body(inputStream);
+				
+					final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
+			                "./fotos/"+nombreImagen
+			        )));
+					return ResponseEntity
+				                .status(HttpStatus.OK)
+				                .contentLength(inputStream.contentLength())
+				                .body(inputStream);
+				
 			} else {
 				return ResponseEntity.badRequest().body(null);
 			}

@@ -15,5 +15,7 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, Long>{
 	Usuarios findOneByEmailAndPassword(String email, String password) throws Exception;
 	
 	long countByEmail(String email) throws Exception;
+	
+	long countByEmailNot(String email) throws Exception;
 
 }

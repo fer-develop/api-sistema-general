@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,15 @@ public class UsuariosService {
 		logger.info("Iniciando Metodo: postUsuario");
 		Response response = null;
 		try {
-			String emailLower = usuarioData.getEmail().toLowerCase();
+			
+			// Limpiar espacios en blanco al prin - final
+			usuarioData.setNombre(usuarioData.getNombre().toLowerCase().trim());
+			usuarioData.setApellidoPaterno(usuarioData.getApellidoPaterno().toLowerCase().trim());
+			usuarioData.setApellidoMaterno(usuarioData.getApellidoMaterno().toLowerCase().trim());
+			usuarioData.setEmail(usuarioData.getEmail().toLowerCase().trim());
+			
+			String emailLower = usuarioData.getEmail();
+			
 			usuarioData.setEmail(emailLower);
 			if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
 				response = new Response(0, "Ya existe un usuario registrado con este correo.");
@@ -74,7 +83,7 @@ public class UsuariosService {
 				Usuarios user = usuariosRepository.save(usuarioData);
 				if (user != null) {
 					logger.info("El usuario ha sido guardado correctamente.");
-					response = new Response(1, "Se inserto el usuario correctamente.", user);
+					response = new Response(1, "Usuario registrado correctamente.", user);
 				} else {
 					throw new Exception("Ocurrio un error al registrar usuario.");
 				}
@@ -111,16 +120,17 @@ public class UsuariosService {
 		return response;
 	}
 
-	public Response renovarToken(HttpServletRequest request) {
+	public Response renovarToken(HttpServletRequest token) {
 		Response response = null;
+		logger.info(token.toString());
 		try {
-			Long usuarioId = (Long) request.getAttribute("usuarioId");
+			Long usuarioId = (Long) token.getAttribute("usuarioId");
 			JWToken tokenClass = new JWToken();
 			if (usuarioId > 0) {
 				Usuarios findByIdUser = usuariosRepository.findOneByUsuarioId(usuarioId);
 				if (findByIdUser != null) {
 					logger.info("El usuario " + findByIdUser.getEmail() + "esta intentando iniciar sesion.");
-					response = new Response(1, "Token renovado.", null, tokenClass.generarJWToken(findByIdUser));
+					response = new Response(1, "Token renovado.", findByIdUser, tokenClass.generarJWToken(findByIdUser));
 				} else {
 					response = new Response(0, "Este usuario no se encuentra registrado.");
 				}
@@ -137,11 +147,28 @@ public class UsuariosService {
 		logger.info("Iniciando Metodo: putUsuario");
 		Response response = null;
 		try {
+			
+			// Limpiar espacios en blanco al prin - final
+			
 			Usuarios usuario = usuariosRepository.getOne(usuarioId);
 			if (usuario != null) {
-				if (usuarioData.getEmail() != null && usuarioData.getEmail() != "") {
-					if (usuariosRepository.countByEmail(usuarioData.getEmail()) > 0) {
-						response = new Response(0, "El email proporcionado ya esta registrado.");
+				
+				if (!usuarioData.getEmail().equals("")) usuarioData.setEmail(usuarioData.getEmail().trim().toLowerCase());
+				
+				if (usuarioData.getEmail().equals(usuario.getEmail().toString())) {
+					usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
+					usuario.setApellidoMaterno(
+							getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
+					usuario.setApellidoPaterno(
+							getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
+					usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
+					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
+					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
+				} else {
+					Long emailExiste = usuariosRepository.countByEmailNot(usuarioData.getEmail());
+					logger.info(emailExiste.toString());
+					if (emailExiste == 1) {
+						response = new Response(0, "Este email está registrado.");
 					} else {
 						usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
 						usuario.setApellidoMaterno(
@@ -152,14 +179,6 @@ public class UsuariosService {
 						usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
 						response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 					}
-				} else {
-					usuario.setNombre(getValor(usuarioData.getNombre(), usuario.getNombre()));
-					usuario.setApellidoMaterno(
-							getValor(usuarioData.getApellidoMaterno(), usuario.getApellidoMaterno()));
-					usuario.setApellidoPaterno(
-							getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
-					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
-					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 				}
 			} else {
 				response = new Response(0, "El usuario no pudo ser encontrado.");
@@ -172,9 +191,9 @@ public class UsuariosService {
 
 	public String getValor(String cadena1, String cadena2) {
 		if (cadena1 != null && cadena1 != "") {
-			return cadena1;
+			return cadena1.toLowerCase().trim();
 		} else {
-			return cadena2;
+			return cadena2.toLowerCase().trim();
 		}
 	}
 
@@ -194,7 +213,7 @@ public class UsuariosService {
 
 				InputStream is = new ByteArrayInputStream(bytesImg);
 				BufferedImage bi = ImageIO.read(is);
-				BufferedImage imagenResize = this.resizeImage(bi, 150, 150);
+				BufferedImage imagenResize = this.resizeImage(bi, 300, 300);
 
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(imagenResize, extension, baos);
@@ -207,7 +226,7 @@ public class UsuariosService {
 				Usuarios usuario = usuariosRepository.findOneByUsuarioId(usuarioId);
 				if (usuario != null) {
 					usuario.setNomImage(nameImage);
-					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
+					response = new Response(1, "Se actualizo la imagen del usuario.", usuariosRepository.save(usuario));
 				} else {
 					response = new Response(0, "Ocurrio un error al actualizar foto.");
 				}

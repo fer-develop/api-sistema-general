@@ -40,7 +40,7 @@ public class Usuarios {
 	@Column(nullable=false)
 	private String apellidoMaterno;
 	@Column(nullable=false, columnDefinition="TEXT UNIQUE")
-	private String email;
+	private String email = "";
 	@Column(name="password", nullable=false)
 	private String password;
 	private String nomImage;
@@ -89,8 +89,8 @@ public class Usuarios {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	@JsonIgnore
-	@JsonProperty(value = "usuarioId")
+	/*@JsonIgnore
+	@JsonProperty(value = "usuarioId")*/
 	public Long getUsuarioId() {
 		return usuarioId;
 	}

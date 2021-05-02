@@ -1,7 +1,6 @@
 package com.sistema.general.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import com.sistema.general.entity.Response;
 import com.sistema.general.entity.SubMenuOpts;
 import com.sistema.general.repository.MenusUsuariosRepository;
 import com.sistema.general.repository.SubMenusUsuariosRepository;
-import com.sistema.general.table.MenusUsuarios;
 import com.sistema.general.table.Usuarios;
 
 @Service
@@ -61,7 +59,7 @@ public class MenuService {
 			
 			
 			
-			return new Response(1, "Se obtuvo menu.", menuReponseList);
+			response =  new Response(1, "Se obtuvo menu.", menuReponseList);
 			//List<MenusUsuarios> menusUsuRes = menusUsuariosRepository.findAllByUsuario(usuario);
 			//(List<SubMenusUsuarios> submenusUsuRes = subMenusUsuarioRepository.findAllByUsuarioId(usuarioId);
 			
@@ -70,7 +68,8 @@ public class MenuService {
 			
 		} catch (Exception e) {
 			logger.error(e.toString());
+			response = new Response(-1, "Ocurrio un error al obtener menu.");
 		}
-		return new Response(-1, "Ocurrio un error al obtener menu.");
+		return response;
 	}
 }

@@ -1,7 +1,5 @@
 package com.sistema.general.configuration;
 
-import java.util.List;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +29,12 @@ public class SistemaConfig {
 		return args -> {
 			// Registrar Usuarios prueba
 			Usuarios alan = new Usuarios(
-					"Alan",
+					"Alan Fernando",
 					"Castillo",
 					"Verdugo",
 					"fer_dev@outlook.com",
 					"$2a$05$Pf12mYYB6id2mx.QNoD6relt6CdGSg23TgUBe/zTagSQcIJ7ym4xu",
-					"asd"
+					"9334c3a7-ac53-46d6-b1d3-377dc3706388.jpg"
 			);
 			
 			Usuarios usuarioReturned = usuariosrepository.save(alan);
