@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -48,10 +49,26 @@ public class UsuariosService {
 		Response response = null;
 		try {
 			List<Usuarios> usuarios = usuariosRepository.findAll();
-			if (usuarios != null) {
+			if (!usuarios.isEmpty()) {
 				response = new Response(1, "Se encontraron los usuarios.", usuarios);
 			} else {
 				response = new Response(0, "No hay usuarios registrados.");
+			}
+		} catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return response;
+	}
+	
+	public Response getUsuarioById(Long usuarioId) throws Exception {
+		logger.info("Iniciando Metodo: getUsuarioById");
+		Response response = null;
+		try {		
+			Optional<Usuarios> usuarios = usuariosRepository.findById(usuarioId);
+			if (usuarios.isPresent()) {
+				response = new Response(1, "Se encontró usuario.", usuarios);
+			} else {
+				response = new Response(0, "Usuario no encontrado.");
 			}
 		} catch (Exception e) {
 			logger.error(e.toString());
@@ -69,6 +86,7 @@ public class UsuariosService {
 			usuarioData.setApellidoPaterno(usuarioData.getApellidoPaterno().toLowerCase().trim());
 			usuarioData.setApellidoMaterno(usuarioData.getApellidoMaterno().toLowerCase().trim());
 			usuarioData.setEmail(usuarioData.getEmail().toLowerCase().trim());
+			usuarioData.setRolUsuario("USER_ROLE");
 			
 			String emailLower = usuarioData.getEmail();
 			
@@ -99,14 +117,14 @@ public class UsuariosService {
 		Response response = null;
 		JWToken tokenClass = new JWToken();
 		try {
-			Usuarios findByEmail = usuariosRepository.findOneByEmail(email);
-			if (findByEmail != null) {
+			Optional<Usuarios> findByEmail = usuariosRepository.findOneByEmail(email);
+			if (findByEmail.isPresent()) {
 				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 				CharSequence sc = password;
-				if (bCryptPasswordEncoder.matches(sc, findByEmail.getPassword())) {
+				if (bCryptPasswordEncoder.matches(sc, findByEmail.get().getPassword())) {
 					logger.info("El usuario " + email + "esta intentando iniciar sesion.");
-					response = new Response(1, "Bienvenido(a) " + findByEmail.getNombre(), findByEmail,
-							tokenClass.generarJWToken(findByEmail));
+					response = new Response(1, "Bienvenido(a) " + findByEmail.get().getNombre(), findByEmail,
+							tokenClass.generarJWToken(findByEmail.get()));
 					logger.info(response.toString());
 				} else {
 					response = new Response(0, "Contraseña invalida.");
@@ -127,10 +145,10 @@ public class UsuariosService {
 			Long usuarioId = (Long) token.getAttribute("usuarioId");
 			JWToken tokenClass = new JWToken();
 			if (usuarioId > 0) {
-				Usuarios findByIdUser = usuariosRepository.findOneByUsuarioId(usuarioId);
-				if (findByIdUser != null) {
-					logger.info("El usuario " + findByIdUser.getEmail() + "esta intentando iniciar sesion.");
-					response = new Response(1, "Token renovado.", findByIdUser, tokenClass.generarJWToken(findByIdUser));
+				Optional<Usuarios> findByIdUser = usuariosRepository.findOneByUsuarioId(usuarioId);
+				if (findByIdUser.isPresent()) {
+					logger.info("El usuario " + findByIdUser.get().getEmail() + "esta intentando iniciar sesion.");
+					response = new Response(1, "Token renovado.", findByIdUser, tokenClass.generarJWToken(findByIdUser.get()));
 				} else {
 					response = new Response(0, "Este usuario no se encuentra registrado.");
 				}
@@ -223,10 +241,10 @@ public class UsuariosService {
 
 				Files.write(path, bytes);
 
-				Usuarios usuario = usuariosRepository.findOneByUsuarioId(usuarioId);
-				if (usuario != null) {
-					usuario.setNomImage(nameImage);
-					response = new Response(1, "Se actualizo la imagen del usuario.", usuariosRepository.save(usuario));
+				Optional<Usuarios> usuario = usuariosRepository.findOneByUsuarioId(usuarioId);
+				if (usuario.isPresent()) {
+					usuario.get().setNomImage(nameImage);
+					response = new Response(1, "Se actualizo la imagen del usuario.", usuariosRepository.save(usuario.get()));
 				} else {
 					response = new Response(0, "Ocurrio un error al actualizar foto.");
 				}

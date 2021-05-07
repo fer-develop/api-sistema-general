@@ -56,6 +56,17 @@ public class UsuariosController {
 		return new Response(-1, "Ocurrio un error al obtener usuarios.");
 	}
 	
+	@GetMapping("/obtener/{usuarioId}")
+	public Response getUsuarioById(@PathVariable Long usuarioId) throws Exception {
+		logger.info("Iniciando Servicio: getUsuarioById");
+		try {
+			return sistemaService.getUsuarioById(usuarioId);
+		} catch(Exception e) {
+			logger.error(e.toString());		
+		}
+		return new Response(-1, "Ocurrio un error al obtener usuario.");
+	}
+	
 	@PostMapping("/registrar")
 	public Response postUsuario(@RequestBody Usuarios userData) throws Exception{
 		logger.info("Iniciando Servicio: postUsuario");

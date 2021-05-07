@@ -1,1 +1,34 @@
-2021-05-02 11:45:07,786 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-9] Iniciando Servicio: getImage
+2021-05-07 00:14:50,131 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-10] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:14:50,132 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-10] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:14:50,243 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-8] Iniciando Servicio: getUsuarios
+2021-05-07 00:14:50,243 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-8] Iniciando Metodo: getUsuarios
+2021-05-07 00:14:50,336 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-9] Iniciando Servicio: getImage
+2021-05-07 00:14:50,556 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-2] Iniciando Servicio: getImage
+2021-05-07 00:14:53,265 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-1] Iniciando Servicio: actualizarToken
+2021-05-07 00:14:53,267 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-1] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:14:53,271 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-1] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:14:53,941 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-3] Iniciando Servicio: getImage
+2021-05-07 00:15:03,251 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-4] Iniciando Servicio: actualizarToken
+2021-05-07 00:15:03,253 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-4] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:15:03,255 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-4] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:15:03,336 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-5] Iniciando Servicio: getImage
+2021-05-07 00:15:06,383 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-6] Iniciando Servicio: actualizarToken
+2021-05-07 00:15:06,384 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-6] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:15:06,387 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-6] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:15:06,492 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-7] Iniciando Servicio: getImage
+2021-05-07 00:15:30,198 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-10] Iniciando Servicio: actualizarToken
+2021-05-07 00:15:30,198 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-10] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:15:30,199 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-10] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:15:30,433 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-8] Iniciando Servicio: actualizarToken
+2021-05-07 00:15:30,433 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-8] org.apache.catalina.connector.RequestFacade@1be97350
+2021-05-07 00:15:30,435 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-8] El usuario alan.castillo@gmail.comesta intentando iniciar sesion.
+2021-05-07 00:15:30,536 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-9] Iniciando Servicio: getUsuarios
+2021-05-07 00:15:30,536 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-9] Iniciando Metodo: getUsuarios
+2021-05-07 00:15:30,623 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-2] Iniciando Servicio: getImage
+2021-05-07 00:15:31,206 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-1] Iniciando Servicio: getImage
+2021-05-07 00:15:31,445 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-3] Iniciando Servicio: getImage
+2021-05-07 00:15:36,729 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-4] Iniciando Servicio: getUsuarios
+2021-05-07 00:15:36,729 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-4] Iniciando Metodo: getUsuarios
+2021-05-07 00:15:37,116 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-5] Iniciando Servicio: getImage
+2021-05-07 00:15:42,117 INFO com.sistema.general.controller.UsuariosController [http-nio-8080-exec-6] Iniciando Servicio: getUsuarios
+2021-05-07 00:15:42,117 INFO com.sistema.general.service.UsuariosService [http-nio-8080-exec-6] Iniciando Metodo: getUsuarios

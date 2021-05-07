@@ -44,6 +44,8 @@ public class Usuarios {
 	@Column(name="password", nullable=false)
 	private String password;
 	private String nomImage;
+	@Column(name="rol_usuario", columnDefinition="VARCHAR(20) DEFAULT 'USER_ROLE' CHECK (rol_usuario IN ('ADMIN_ROLE', 'USER_ROLE'))", nullable = false)
+	private String rolUsuario;
 	@Column(name="fecha_registro", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable=false, insertable=false, nullable = false)
 	private LocalDate fechaRegistro;
 	@OneToMany(mappedBy = "usuario")
@@ -65,28 +67,38 @@ public class Usuarios {
 		this.password = password;
 		this.nomImage = nomImage;
 	}
-
+	
 	public Usuarios(String nombre, String apellidoPaterno, String apellidoMaterno, String email,
-					String password, String nomImage, LocalDate fechaRegistro) {
+			String password, String nomImage, String rolUsuario) {
+		super();
 		this.nombre = nombre;
 		this.apellidoPaterno = apellidoPaterno;
 		this.apellidoMaterno = apellidoMaterno;
 		this.email = email;
 		this.password = password;
 		this.nomImage = nomImage;
+		this.rolUsuario = rolUsuario;
+	}
+	
+	public Usuarios(String nombre, String apellidoPaterno, String apellidoMaterno, String email,
+			String password, String nomImage, String rolUsuario, LocalDate fechaRegistro) {
+		super();
+		this.nombre = nombre;
+		this.apellidoPaterno = apellidoPaterno;
+		this.apellidoMaterno = apellidoMaterno;
+		this.email = email;
+		this.password = password;
+		this.nomImage = nomImage;
+		this.rolUsuario = rolUsuario;
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	public Usuarios(Long usuarioId, String nombre, String apellidoPaterno, String apellidoMaterno, String email,
-					String password, String nomImage, LocalDate fechaRegistro) {
-		this.usuarioId = usuarioId;
-		this.nombre = nombre;
-		this.apellidoPaterno = apellidoPaterno;
-		this.apellidoMaterno = apellidoMaterno;
-		this.email = email;
-		this.password = password;
-		this.nomImage = nomImage;
-		this.fechaRegistro = fechaRegistro;
+	public String getRolUsuario() {
+		return rolUsuario;
+	}
+
+	public void setRolUsuario(String rolUsuario) {
+		this.rolUsuario = rolUsuario;
 	}
 
 	/*@JsonIgnore

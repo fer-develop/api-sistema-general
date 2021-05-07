@@ -34,7 +34,8 @@ public class SistemaConfig {
 					"Verdugo",
 					"fer_dev@outlook.com",
 					"$2a$05$Pf12mYYB6id2mx.QNoD6relt6CdGSg23TgUBe/zTagSQcIJ7ym4xu",
-					"9334c3a7-ac53-46d6-b1d3-377dc3706388.jpg"
+					"9334c3a7-ac53-46d6-b1d3-377dc3706388.jpg",
+					"ADMIN_ROLE"
 			);
 			
 			Usuarios usuarioReturned = usuariosrepository.save(alan);
