@@ -86,8 +86,8 @@ public class UsuariosService {
 			usuarioData.setApellidoPaterno(usuarioData.getApellidoPaterno().toLowerCase().trim());
 			usuarioData.setApellidoMaterno(usuarioData.getApellidoMaterno().toLowerCase().trim());
 			usuarioData.setEmail(usuarioData.getEmail().toLowerCase().trim());
-			usuarioData.setRolUsuario("USER_ROLE");
-			
+			usuarioData.setRolUsuario(usuarioData.getRolUsuario().toUpperCase().trim());
+
 			String emailLower = usuarioData.getEmail();
 			
 			usuarioData.setEmail(emailLower);
@@ -170,7 +170,7 @@ public class UsuariosService {
 			
 			Usuarios usuario = usuariosRepository.getOne(usuarioId);
 			if (usuario != null) {
-				
+				logger.info(usuarioData.toString());
 				if (!usuarioData.getEmail().equals("")) usuarioData.setEmail(usuarioData.getEmail().trim().toLowerCase());
 				
 				if (usuarioData.getEmail().equals(usuario.getEmail().toString())) {
@@ -181,6 +181,7 @@ public class UsuariosService {
 							getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 					usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
 					usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
+					usuario.setRolUsuario(usuarioData.getRolUsuario().toUpperCase());
 					response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 				} else {
 					Long emailExiste = usuariosRepository.countByEmailNot(usuarioData.getEmail());
@@ -195,6 +196,7 @@ public class UsuariosService {
 								getValor(usuarioData.getApellidoPaterno(), usuario.getApellidoPaterno()));
 						usuario.setEmail(getValor(usuarioData.getEmail(), usuario.getEmail()));
 						usuario.setPassword(getValor(usuarioData.getPassword(), usuario.getPassword()));
+						usuario.setRolUsuario(usuarioData.getRolUsuario().toUpperCase());
 						response = new Response(1, "Se actualizo el usuario.", usuariosRepository.save(usuario));
 					}
 				}
@@ -208,11 +210,31 @@ public class UsuariosService {
 	}
 
 	public String getValor(String cadena1, String cadena2) {
-		if (cadena1 != null && cadena1 != "") {
-			return cadena1.toLowerCase().trim();
+		if (cadena1 == null) {
+			return cadena2;
+		} else if (cadena1.trim().isEmpty() || cadena1.trim().isBlank()){
+			return cadena2;
 		} else {
-			return cadena2.toLowerCase().trim();
+			return cadena1.toLowerCase().trim();			
 		}
+	}
+	
+	public Response deleteUsuario(Long usuarioId) throws Exception{
+		logger.info("Iniciando Metodo: deleteUsuario");
+		Response response = null;
+		
+		try {
+			if (usuarioId == null) {
+				response = new Response(1, "Identificador de usuario no proporcionado.");
+			} else {
+				this.usuariosRepository.deleteById(usuarioId);
+				response = new Response(1, "Se elimino al usuario correctamente.");
+			}
+			
+		} catch(Exception e) {
+			response = new Response(-1, "Ocurrio un error al eliminar usuario");
+		}
+		return response;
 	}
 
 	public Response putImage(Long usuarioId, MultipartFile imagen) throws Exception {
@@ -232,7 +254,7 @@ public class UsuariosService {
 				InputStream is = new ByteArrayInputStream(bytesImg);
 				BufferedImage bi = ImageIO.read(is);
 				BufferedImage imagenResize = this.resizeImage(bi, 300, 300);
-
+				
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				ImageIO.write(imagenResize, extension, baos);
 				byte[] bytes = baos.toByteArray();

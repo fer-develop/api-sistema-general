@@ -6,7 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +82,16 @@ public class UsuariosController {
 	public Response putUsuario(@PathVariable Long usuarioId, @RequestBody Usuarios userData) throws Exception{
 		try {
 			return sistemaService.putUsuario(usuarioId, userData);
+		} catch(Exception e) {
+			logger.error(e.toString());
+		}
+		return new Response(-1, "Ocurrio un error al actualizar usuario.");
+	}
+	
+	@DeleteMapping("/eliminar/{usuarioId}")
+	public Response deleteUsuario(@PathVariable Long usuarioId) {
+		try {
+			return sistemaService.deleteUsuario(usuarioId);
 		} catch(Exception e) {
 			logger.error(e.toString());
 		}
